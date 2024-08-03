@@ -1,9 +1,9 @@
 { rev ? "v5.1.4"
-, sha256 ? "sha256-I4YxxSGdQT8twkoFx3zmZhyLTSagmeLD2pygVfY/pEk="
+, sha256 ? "sha256-NzJirLfaGbDDE3A6YTACDwrQhbZ6WOqznRSptYcY464="
 , toolsToInclude ? [
     "xtensa-esp-elf-gdb"
     "riscv32-esp-elf-gdb"
-    "xtensa-esp-elf"
+    "xtensa-esp32-elf"
     "esp-clang"
     "riscv32-esp-elf"
     "esp32ulp-elf"
