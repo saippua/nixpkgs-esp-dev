@@ -3,7 +3,7 @@
 , toolsToInclude ? [
     "xtensa-esp-elf-gdb"
     "riscv32-esp-elf-gdb"
-    "xtensa-esp-elf"
+    "xtensa-esp32-elf"
     "esp-clang"
     "riscv32-esp-elf"
     "esp32ulp-elf"
