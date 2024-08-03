@@ -1,4 +1,4 @@
-{ rev ? "v5.2.2"
+{ rev ? "v5.1.4"
 , sha256 ? "sha256-I4YxxSGdQT8twkoFx3zmZhyLTSagmeLD2pygVfY/pEk="
 , toolsToInclude ? [
     "xtensa-esp-elf-gdb"
@@ -133,6 +133,6 @@ stdenv.mkDerivation rec {
     ln -s ${customPython} $out/python-env
     ln -s ${customPython}/lib $out/lib
 
-    echo "5.2.2-joakim" > $out/version.txt
+    echo "5.1.4-olli" > $out/version.txt
  '';
 }
