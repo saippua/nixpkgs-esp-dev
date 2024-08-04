@@ -169,6 +169,21 @@ rec {
     };
   };
 
+  esp-idf-nvs-partition-gen = buildPythonPackage rec {
+    pname = "esp_idf_nvs_partition_gen";
+    version = "0.1.2";
+    format = "pyproject";
+    src = fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-HjW5RCKfy83LQgAs0tOW/f9LPVoLwHY1pyb6ar+AxwY=";
+    };
+    doCheck = false;
+    propagatedBuildInputs = [
+      setuptools
+      cryptography
+    ];
+  };
+
   pyclang = buildPythonPackage rec {
     pname = "pyclang";
     version = "0.4.2";

@@ -1,9 +1,9 @@
-{ rev ? "v5.1.4"
-, sha256 ? "sha256-NzJirLfaGbDDE3A6YTACDwrQhbZ6WOqznRSptYcY464="
+{ rev ? "v5.3"
+, sha256 ? "sha256-4ArX4+f+ILoEucT1MegTkjmSjUOS/lBkcmuuTM8PTBM="
 , toolsToInclude ? [
     "xtensa-esp-elf-gdb"
     "riscv32-esp-elf-gdb"
-    "xtensa-esp32-elf"
+    "xtensa-esp-elf"
     "esp-clang"
     "riscv32-esp-elf"
     "esp32ulp-elf"
@@ -27,6 +27,8 @@
 , pkg-config
 , cmake
 , ninja
+, ccache
+, libusb1
 , ncurses5
 , dfu-util
 }:
@@ -35,7 +37,7 @@ let
   src = fetchFromGitHub {
     owner = "espressif";
     repo = "esp-idf";
-    rev = rev;
+    rev = "refs/tags/${rev}";
     sha256 = sha256;
     fetchSubmodules = true;
     leaveDotGit = true;
@@ -75,9 +77,11 @@ let
           pyclang
 
           freertos_gdb
-
-          # The esp idf vscode extension seems to want pip, too
           pip
+
+          packaging
+          esp-idf-nvs-partition-gen
+          construct
         ]));
 in
 stdenv.mkDerivation rec {
@@ -110,8 +114,10 @@ stdenv.mkDerivation rec {
     ninja
 
     ncurses5
+    ccache
 
     dfu-util
+    libusb1
   ] ++ toolDerivationsToInclude;
 
   # We are including cmake and ninja so that downstream derivations (eg. shells)
@@ -122,17 +128,12 @@ stdenv.mkDerivation rec {
   dontUseNinjaInstall = true;
   dontUseNinjaCheck = true;
 
-  installPhase = ''
+  buildPhase = ''
     mkdir -p $out
     cp -rv . $out/
-
-    # Link the Python environment in so that:
-    # - The setup hook can set IDF_PYTHON_ENV_PATH to it.
-    # - In shell derivations, the Python setup hook will add the site-packages
-    #   directory to PYTHONPATH.
+  '';
+  installPhase = ''
     ln -s ${customPython} $out/python-env
-    ln -s ${customPython}/lib $out/lib
-
-    echo "5.1.4-olli" > $out/version.txt
+    # ln -s ${customPython}/lib $out/lib
  '';
 }
