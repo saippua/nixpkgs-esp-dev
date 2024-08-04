@@ -6,7 +6,10 @@ addIdfEnvVars() {
         export IDF_PATH="$1"
         export IDF_TOOLS_PATH="$IDF_PATH/tools"
         export IDF_PYTHON_CHECK_CONSTRAINTS=no
-        export IDF_PYTHON_ENV_PATH="$IDF_PATH/python-env"
+        # Set the python env path to the target of the python-env link
+        # This avoids a warning when idf.py checks that the python interpreter
+        # matches the env path
+        export IDF_PYTHON_ENV_PATH=$(readlink "$IDF_PATH/python-env")
         addToSearchPath PATH "$IDF_TOOLS_PATH"
     fi
 }
