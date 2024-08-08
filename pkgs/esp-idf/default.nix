@@ -40,7 +40,7 @@ let
     rev = "refs/tags/${rev}";
     sha256 = sha256;
     fetchSubmodules = true;
-    leaveDotGit = true;
+    leaveDotGit = false;
   };
 
   allTools = callPackage (import ./tools.nix) {
